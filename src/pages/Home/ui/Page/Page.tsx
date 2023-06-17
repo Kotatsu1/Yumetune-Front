@@ -1,4 +1,18 @@
+import { useQuery } from "react-query";
+
 const Home = () => {
+  const { isLoading, error, data } = useQuery("music", () =>
+    fetch("https://api.github.com/repos/tannerlinsley/react-query").then(
+      (res) => res.json(),
+    ),
+  );
+
+  if (isLoading) return "Loading...";
+
+  if (error) return "An error has occurred: " + error;
+
+  console.log(data);
+
   return (
     <section>
       <div className="hero h-[calc(100vh-68px)]">

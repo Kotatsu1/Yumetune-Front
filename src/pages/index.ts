@@ -1,3 +1,4 @@
 import { Home } from "./Home";
 import { NoMatch } from "./NoMatch";
-export { NoMatch, Home };
+import { Songs } from "./Songs";
+export { NoMatch, Home, Songs };

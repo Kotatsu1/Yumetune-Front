@@ -1,8 +1,9 @@
+import { useAppSelector } from "@/app/hooks";
 import { LayoutHeader, LayoutPlayer } from "@/widgets";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
-  const isAuth = false;
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   return (
     <>
@@ -11,7 +12,7 @@ const Layout = () => {
         <main>
           <Outlet />
         </main>
-        {isAuth ? (
+        {isAuthenticated ? (
           <>
             <LayoutPlayer />
           </>

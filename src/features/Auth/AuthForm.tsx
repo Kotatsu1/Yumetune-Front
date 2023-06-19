@@ -1,14 +1,18 @@
-import { FC, useState } from "react";
+import { FC } from "react";
+import { useState } from "react";
 import axios from "axios";
+import { useAppDispatch } from "@/app/hooks";
+import { setAuthenticated } from "./AuthSlice";
 
 const AuthForm: FC = () => {
   const [login, setLogin] = useState(false);
+  const dispatch = useAppDispatch();
 
   const ChangeForm = () => {
     setLogin(!login);
   };
 
-  const Login = async () => {
+  const handleLogin = async () => {
     try {
       const response = await axios.post(
         "http://localhost:8000/api/auth/login",
@@ -27,13 +31,14 @@ const AuthForm: FC = () => {
         },
       );
       const data = response.data;
+      dispatch(setAuthenticated());
       console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const Register = async () => {
+  const handleRegister = async () => {
     try {
       const response = await axios.post(
         "http://localhost:8000/api/auth/register",
@@ -126,7 +131,7 @@ const AuthForm: FC = () => {
                   <div className="form-control mt-2">
                     <button
                       className="btn-primary btn text-white font-semibold"
-                      onClick={Login}
+                      onClick={handleLogin}
                     >
                       Login
                     </button>
@@ -137,7 +142,7 @@ const AuthForm: FC = () => {
                   <div className="form-control mt-2">
                     <button
                       className="btn-primary btn text-white font-semibold"
-                      onClick={Register}
+                      onClick={handleRegister}
                     >
                       Registration
                     </button>

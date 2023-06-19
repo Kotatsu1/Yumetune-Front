@@ -1,22 +1,15 @@
+import { useAppSelector } from "@/app/hooks";
 import { AuthForm } from "@/features/Auth";
 import { Songs } from "@/pages";
 // import { useQuery } from "react-query";
 // import axios from "axios";
 
 const Home = () => {
-  // const { isLoading, error, data } = useQuery("music", () =>
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
-  // );
+  console.log(isAuthenticated);
 
-  // if (isLoading) return "Loading...";
-
-  // if (error) return "An error has occurred: " + error;
-
-  // console.log(data);
-
-  const isAuth = false;
-
-  return <>{!isAuth ? <AuthForm /> : <Songs />}</>;
+  return <>{!isAuthenticated ? <AuthForm /> : <Songs />}</>;
 };
 
 export default Home;

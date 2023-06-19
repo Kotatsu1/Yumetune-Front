@@ -1,4 +1,27 @@
-const Profile = () => {
+import { FC } from "react";
+import { useAppDispatch } from "@/app/hooks";
+import { clearAuthenticated } from "@/features/Auth/AuthSlice";
+import axios from "axios";
+
+const Profile: FC = () => {
+  const dispatch = useAppDispatch();
+
+  const Logout = async () => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:8000/api/auth/logout",
+        {
+          withCredentials: true,
+        },
+      );
+      const data = response.data;
+      dispatch(clearAuthenticated());
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="dropdown-end dropdown">
       <label tabIndex={0} className="btn-ghost btn-square avatar btn">
@@ -20,7 +43,7 @@ const Profile = () => {
           <a>Settings</a>
         </li>
         <li>
-          <a>Logout</a>
+          <button onClick={Logout}>Logout</button>
         </li>
       </ul>
     </div>

@@ -1,28 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
 
-const initialState = {
-  isAuthenticated: !!Cookies.get("authToken"),
-  authToken: Cookies.get("authToken") || null,
+interface AuthState {
+  isAuthenticated: boolean;
+}
+
+const initialState: AuthState = {
+  isAuthenticated: false,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setAuthToken: (state, action) => {
+    setAuthenticated(state) {
       state.isAuthenticated = true;
-      state.authToken = action.payload;
-      Cookies.set("authToken", action.payload);
     },
-    clearAuthToken: (state) => {
+    clearAuthenticated(state) {
       state.isAuthenticated = false;
-      state.authToken = null;
-      Cookies.remove("authToken");
     },
   },
 });
 
-export const { setAuthToken, clearAuthToken } = authSlice.actions;
+export const { setAuthenticated, clearAuthenticated } = authSlice.actions;
 
 export default authSlice.reducer;

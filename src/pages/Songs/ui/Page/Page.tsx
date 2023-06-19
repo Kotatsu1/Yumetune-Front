@@ -1,8 +1,12 @@
-const Songs: React.FC = () => {
+import { FC } from "react";
+
+const Songs: FC = () => {
   return (
-    <div>
-      <h1>Songs</h1>
-    </div>
+    <section>
+      <div className="p-4">
+        <h1 className="text-4xl text-white font-bold">Songs</h1>
+      </div>
+    </section>
   );
 };
 

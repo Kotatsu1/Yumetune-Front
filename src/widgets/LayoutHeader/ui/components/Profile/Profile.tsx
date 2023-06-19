@@ -1,9 +1,9 @@
 const Profile = () => {
   return (
     <div className="dropdown-end dropdown">
-      <label tabIndex={0} className="btn-ghost btn-circle avatar btn">
+      <label tabIndex={0} className="btn-ghost btn-square avatar btn">
         <div className="w-10 rounded-full">
-          <img src="" />
+          <img src="/profile.png" />
         </div>
       </label>
       <ul

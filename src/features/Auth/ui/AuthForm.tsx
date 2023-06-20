@@ -1,25 +1,33 @@
 import { FC } from "react";
 import { useState } from "react";
-import axios from "axios";
 import { useAppDispatch } from "@/app/hooks";
 import { setAuthenticated } from "../AuthSlice";
+import { useForm, SubmitHandler } from "react-hook-form";
+import axios from "axios";
+
+type Form = {
+  login: string;
+  username: string;
+  email: string;
+  password: string;
+};
 
 const AuthForm: FC = () => {
   const [login, setLogin] = useState(false);
   const dispatch = useAppDispatch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Form>();
 
-  const ChangeForm = () => {
-    setLogin(!login);
-  };
-
-  const handleLogin = async () => {
+  const handleLogin: SubmitHandler<Form> = async (form) => {
     try {
       const response = await axios.post(
         "http://localhost:8000/api/auth/login",
         {
-          username: "string",
-          email: "string",
-          password: "string",
+          login: form.login,
+          password: form.password,
         },
         {
           headers: {
@@ -35,24 +43,33 @@ const AuthForm: FC = () => {
       console.log(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      console.log("finally");
     }
+    console.log(form);
   };
 
-  const handleRegister = async () => {
+  const handleRegister: SubmitHandler<Form> = async (form) => {
     try {
       const response = await axios.post(
         "http://localhost:8000/api/auth/register",
         {
-          username: "string",
-          email: "string",
-          password: "string",
+          username: form.username,
+          email: form.email,
+          password: form.password,
         },
       );
       const data = response.data;
       console.log(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      console.log("finally");
     }
+  };
+
+  const ChangeForm = () => {
+    setLogin(!login);
   };
 
   return (
@@ -69,91 +86,101 @@ const AuthForm: FC = () => {
             </p>
           </div>
           <div className="card w-full max-w-sm flex-shrink-0 bg-base-100 shadow-2xl">
-            <div className="card-body">
-              {login ? (
-                <></>
-              ) : (
-                <>
+            {!login ? (
+              <>
+                <form
+                  className="card-body pb-0"
+                  onSubmit={handleSubmit(handleLogin)}
+                >
                   <div className="form-control">
                     <label className="label">
-                      <span className="label-text font-bold">Name</span>
+                      <span className="label-text font-bold">Login</span>
                     </label>
                     <input
                       type="text"
-                      placeholder="Name"
-                      name="name"
+                      placeholder="Login"
+                      {...register("login", { required: true })}
                       className="input-bordered input"
                     />
                   </div>
-                </>
-              )}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-bold">Email</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="E-mail"
-                  name="email"
-                  className="input-bordered input"
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-bold">Password</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Password"
-                  name="password"
-                  className="input-bordered input"
-                />
-                {login ? (
-                  <>
+                  <div className="form-control">
                     <label className="label">
-                      <a href="#" className="link-hover label-text-alt link">
-                        Forgot password?
-                      </a>
+                      <span className="label-text font-bold">Password</span>
                     </label>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </div>
-              {login ? (
-                <>
-                  {/* <div className="form-control">
-                    <label className="label cursor-pointer">
-                      <span className="label-text">Remember me</span>
-                      <input type="checkbox" className="toggle" checked />
-                    </label>
-                  </div> */}
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      {...register("password", {
+                        required: true,
+                        minLength: 8,
+                      })}
+                      className="input-bordered input"
+                    />
+                  </div>
                   <div className="form-control mt-2">
                     <button
+                      type="submit"
                       className="btn-primary btn text-white font-semibold"
-                      onClick={handleLogin}
                     >
                       Login
                     </button>
                   </div>
-                </>
-              ) : (
-                <>
+                </form>
+              </>
+            ) : (
+              <>
+                <form
+                  className="card-body pb-0"
+                  onSubmit={handleSubmit(handleRegister)}
+                >
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-bold">Nickname</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Nickname"
+                      {...register("username", { required: true })}
+                      className="input-bordered input"
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-bold">Email</span>
+                    </label>
+                    <input
+                      type="email"
+                      placeholder="E-mail"
+                      {...register("email", { required: true })}
+                      className="input-bordered input"
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-bold">Password</span>
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      {...register("password", { required: true })}
+                      className="input-bordered input"
+                    />
+                  </div>
                   <div className="form-control mt-2">
                     <button
+                      type="submit"
                       className="btn-primary btn text-white font-semibold"
-                      onClick={handleRegister}
                     >
                       Registration
                     </button>
                   </div>
-                </>
-              )}
-              <div className="divider">
-                <button className="text-base" onClick={ChangeForm}>
-                  {login ? "Register" : "Login"}
-                </button>
-              </div>
+                </form>
+              </>
+            )}
+            <div className="divider">
+              <button className="text-base" onClick={ChangeForm}>
+                {!login ? "Register" : "Login"}
+              </button>
             </div>
           </div>
         </div>

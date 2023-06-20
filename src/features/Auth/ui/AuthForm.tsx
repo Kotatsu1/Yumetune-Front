@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useAppDispatch } from "@/app/hooks";
-import { setAuthenticated } from "./AuthSlice";
+import { setAuthenticated } from "../AuthSlice";
 
 const AuthForm: FC = () => {
   const [login, setLogin] = useState(false);

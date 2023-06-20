@@ -28,11 +28,12 @@ Yumetune-Front is built with the following technologies:
 
 - TypeScript
 - React
+- Redux + Redux Tool-kit
 - React Query
 - Tailwind + DaisyUI
 - Vite
 
 ## Authors
 
-- Kotatsu Nikita [Telegram](https://t.me/Kotatsu) [E-mail](nikitakotatsu@gmail.com)
-- Popov Aleksey [Telegram](https://t.me/AlekseyPopovDev) [E-mail](alekseypopov.dev@gmail.com)
+- Kotatsu Nikita [Telegram](https://t.me/Kotatsu)
+- Popov Aleksey [Telegram](https://t.me/AlekseyPopovDev)

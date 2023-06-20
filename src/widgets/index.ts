@@ -1,3 +1,4 @@
 import { Layout } from "./Layout";
 import { LayoutHeader } from "./LayoutHeader";
-export { Layout, LayoutHeader };
+import { LayoutPlayer } from "./LayoutPlayer";
+export { Layout, LayoutHeader, LayoutPlayer };

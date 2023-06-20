@@ -1,14 +1,19 @@
-import Logo from "../Logo/Logo";
-import Nav from "../Nav/Nav";
-import Profile from "../Profile/Profile";
+import { useAppSelector } from "@/app/hooks";
+import { Logo, Nav, Profile } from "../components";
 
 const LayoutHeader = () => {
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+
   return (
     <>
       <header className="navbar flex justify-between bg-base-100">
         <Logo />
-        <Nav />
-        <Profile />
+        {isAuthenticated ? (
+          <>
+            <Nav />
+            <Profile />
+          </>
+        ) : null}
       </header>
     </>
   );

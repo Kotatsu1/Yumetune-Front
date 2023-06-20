@@ -1,14 +1,22 @@
-import { LayoutHeader } from "@/widgets";
+import { useAppSelector } from "@/app/hooks";
+import { LayoutHeader, LayoutPlayer } from "@/widgets";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex font-mono flex-col">
         <LayoutHeader />
         <main>
           <Outlet />
         </main>
+        {isAuthenticated ? (
+          <>
+            <LayoutPlayer />
+          </>
+        ) : null}
       </div>
     </>
   );

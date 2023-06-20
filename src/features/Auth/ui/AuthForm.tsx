@@ -14,6 +14,7 @@ type Form = {
 
 const AuthForm: FC = () => {
   const [login, setLogin] = useState(false);
+  const apiUrl = import.meta.env.VITE_APP_API;
   const dispatch = useAppDispatch();
   const {
     register,
@@ -24,7 +25,7 @@ const AuthForm: FC = () => {
   const handleLogin: SubmitHandler<Form> = async (form) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/auth/login",
+        `${apiUrl}/auth/login`,
         {
           login: form.login,
           password: form.password,
@@ -43,28 +44,21 @@ const AuthForm: FC = () => {
       console.log(data);
     } catch (error) {
       console.log(error);
-    } finally {
-      console.log("finally");
     }
     console.log(form);
   };
 
   const handleRegister: SubmitHandler<Form> = async (form) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/auth/register",
-        {
-          username: form.username,
-          email: form.email,
-          password: form.password,
-        },
-      );
+      const response = await axios.post(`${apiUrl}/auth/register`, {
+        username: form.username,
+        email: form.email,
+        password: form.password,
+      });
       const data = response.data;
       console.log(data);
     } catch (error) {
       console.log(error);
-    } finally {
-      console.log("finally");
     }
   };
 

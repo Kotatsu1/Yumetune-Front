@@ -7,7 +7,7 @@ const Layout = () => {
 
   return (
     <>
-      <div className="flex font-sans flex-col">
+      <div className="flex font-mono flex-col">
         <LayoutHeader />
         <main>
           <Outlet />

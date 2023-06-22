@@ -8,17 +8,12 @@ const Profile: FC = () => {
 
   const Logout = async () => {
     try {
-      const response = await axios.delete(
-        "http://localhost:8000/api/auth/logout",
-        {
-          withCredentials: true,
-        },
-      );
-      const data = response.data;
+      await axios.delete("http://localhost:8000/api/auth/logout", {
+        withCredentials: true,
+      });
       dispatch(clearAuthenticated());
-      console.log(data);
     } catch (error) {
-      console.log(error);
+      console.log("error: " + error);
     }
   };
 

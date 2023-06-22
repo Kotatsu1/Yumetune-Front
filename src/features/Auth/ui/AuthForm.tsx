@@ -14,17 +14,13 @@ type Form = {
 
 const AuthForm: FC = () => {
   const [login, setLogin] = useState(false);
-  const apiUrl = import.meta.env.VITE_APP_API;
   const dispatch = useAppDispatch();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Form>();
+  const apiUrl = import.meta.env.VITE_APP_API;
+  const { register, handleSubmit } = useForm<Form>();
 
   const handleLogin: SubmitHandler<Form> = async (form) => {
     try {
-      const response = await axios.post(
+      await axios.post(
         `${apiUrl}/auth/login`,
         {
           login: form.login,
@@ -39,26 +35,21 @@ const AuthForm: FC = () => {
           withCredentials: true,
         },
       );
-      const data = response.data;
-      dispatch(setAuthenticated());
-      console.log(data);
+      dispatch(setAuthenticated(true));
     } catch (error) {
-      console.log(error);
+      console.log("error: " + error);
     }
-    console.log(form);
   };
 
   const handleRegister: SubmitHandler<Form> = async (form) => {
     try {
-      const response = await axios.post(`${apiUrl}/auth/register`, {
+      await axios.post(`${apiUrl}/auth/register`, {
         username: form.username,
         email: form.email,
         password: form.password,
       });
-      const data = response.data;
-      console.log(data);
     } catch (error) {
-      console.log(error);
+      console.log("error: " + error);
     }
   };
 
@@ -71,10 +62,10 @@ const AuthForm: FC = () => {
       <div className="hero h-[calc(100vh-68px)]">
         <div className="hero-content flex-col gap-8 lg:flex-row-reverse">
           <div className="flex flex-col justify-center gap-y-4 text-center lg:text-left">
-            <h1 className="w-96 text-5xl font-bold">
+            <h1 className="w-96 text-4xl font-bold">
               Discover the world of music with YumeTune
             </h1>
-            <p className="w-96 text-2xl">
+            <p className="w-80 text-lg">
               Listen to your dreams with Yumetune - the audio streaming platform
               that takes you to new worlds of sound.
             </p>

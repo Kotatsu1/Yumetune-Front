@@ -7,16 +7,16 @@ const Layout = () => {
 
   return (
     <>
-      <div className="flex font-mono flex-col">
+      <div className="flex font-mono overflow-y-hidden flex-col">
         <LayoutHeader />
         <main>
           <Outlet />
         </main>
-        {isAuthenticated ? (
+        {/* {isAuthenticated ? (
           <>
             <LayoutPlayer />
           </>
-        ) : null}
+        ) : null} */}
       </div>
     </>
   );

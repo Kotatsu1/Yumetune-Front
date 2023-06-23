@@ -62,10 +62,10 @@ const AuthForm: FC = () => {
       <div className="hero h-[calc(100vh-68px)]">
         <div className="hero-content flex-col gap-8 lg:flex-row-reverse">
           <div className="flex flex-col justify-center gap-y-4 text-center lg:text-left">
-            <h1 className="w-96 text-4xl font-bold">
+            <h1 className="lg:w-96 text-4xl font-bold">
               Discover the world of music with YumeTune
             </h1>
-            <p className="w-80 text-lg">
+            <p className="lg:w-80 text-lg">
               Listen to your dreams with Yumetune - the audio streaming platform
               that takes you to new worlds of sound.
             </p>

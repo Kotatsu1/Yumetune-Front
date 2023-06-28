@@ -1,2 +1,2 @@
-import { AuthForm, AuthSlice } from "./Auth";
-export { AuthForm, AuthSlice };
+import { AuthForm, AuthSlice, setAuthenticated } from "./Auth";
+export { AuthForm, AuthSlice, setAuthenticated };

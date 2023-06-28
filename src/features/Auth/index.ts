@@ -1,3 +1,3 @@
 import AuthForm from "./ui/AuthForm";
-import AuthSlice from "./AuthSlice";
-export { AuthForm, AuthSlice };
+import AuthSlice, { setAuthenticated } from "./AuthSlice";
+export { AuthForm, AuthSlice, setAuthenticated };

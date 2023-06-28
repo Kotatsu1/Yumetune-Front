@@ -1,5 +1,23 @@
+import { Song } from "@/entities";
 import { FC, useRef, useState } from "react";
 import ReactHlsPlayer from "react-hls-player";
+
+const SongsData = [
+  {
+    id: 1,
+    name: "-riptide",
+    artist: "gawr gura",
+    album: "-riptide",
+    duration: 209,
+  },
+  {
+    id: 2,
+    name: "-riptide",
+    artist: "gawr gura",
+    album: "-riptide",
+    duration: 209,
+  },
+];
 
 const Songs: FC = () => {
   const playerRef = useRef();
@@ -48,9 +66,34 @@ const Songs: FC = () => {
       <div className="h-calc(100vh-68px)">
         <div className="p-4">
           <h1 className="text-4xl text-white font-bold">Songs</h1>
+          <div className="flex flex-col">
+            <div className="overflow-x-auto">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Artist</th>
+                    <th>Album</th>
+                    <th>Duration</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {SongsData.map((song) => (
+                    <Song
+                      key={song.id}
+                      name={song.name}
+                      artist={song.artist}
+                      album={song.album}
+                      duration={song.duration}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
           <ReactHlsPlayer
             className=""
-            src="http://localhost:8000/songs/output/output.m3u8"
+            src="http://localhost:8000/songs/gawr gura -riptide/output.m3u8"
             autoPlay={false}
             controls={true}
             width="auto"

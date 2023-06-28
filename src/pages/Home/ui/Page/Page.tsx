@@ -1,8 +1,7 @@
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { useEffect } from "react";
-import { setAuthenticated } from "@/features/Auth/AuthSlice";
-import { AuthForm } from "@/features/Auth";
-import { Songs } from "@/pages";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { setAuthenticated, AuthForm } from "@/features";
+import { Browse } from "@/pages";
 
 const Home = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
@@ -18,7 +17,7 @@ const Home = () => {
 
   console.log(isAuthenticated);
 
-  return <>{!isAuthenticated ? <AuthForm /> : <Songs />}</>;
+  return <>{!isAuthenticated ? <AuthForm /> : <Browse />}</>;
 };
 
 export default Home;

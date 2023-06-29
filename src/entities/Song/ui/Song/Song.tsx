@@ -1,6 +1,6 @@
 import { Song } from "@/entities/Song/types";
 
-const Song = ({ /*img, alt, */ name, artist, album, duration }: Song) => {
+const Song = ({ /*img, alt, */ name, artist, duration }: Song) => {
   return (
     <>
       <tr className="hover">
@@ -10,8 +10,7 @@ const Song = ({ /*img, alt, */ name, artist, album, duration }: Song) => {
           {name}
         </td>
         <td>{artist}</td>
-        <td>{album}</td>
-        <td>{Math.round(duration / 60)}</td>
+        <td>{`${Math.floor(duration / 60)}:${duration % 60}`}</td>
       </tr>
     </>
   );

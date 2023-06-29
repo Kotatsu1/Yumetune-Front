@@ -1,30 +1,39 @@
 import { Song } from "@/entities";
-import { FC, useRef, useState } from "react";
+import { FC, useRef, useState, useEffect } from "react";
 import ReactHlsPlayer from "react-hls-player";
+import axios from "axios";
 
-const SongsData = [
-  {
-    id: 1,
-    name: "-riptide",
-    artist: "gawr gura",
-    album: "-riptide",
-    duration: 209,
-  },
-  {
-    id: 2,
-    name: "-riptide",
-    artist: "gawr gura",
-    album: "-riptide",
-    duration: 209,
-  },
-];
+
 
 const Songs: FC = () => {
-  const playerRef = useRef();
+  const playerRef: any = useRef();
   const [mute, setMute] = useState(false);
   const [play, setPlay] = useState(false);
-  const volume = 80;
-  const time = 80;
+  const [songsData, setSongsData] = useState([]);
+  // const volume = 80;
+  // const time = 80;
+
+  const apiUrl = import.meta.env.VITE_APP_API;
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      
+      const response = await axios.get(`${apiUrl}/songs/all`);
+      setSongsData(response.data);
+    };
+
+    fetchData();
+  }, []);
+
+
+
+  // const [selectedSong, setSelectedSong] = useState<string | null>(null);
+
+  // const handleSongSelect = (artist: string, title: string) => {
+  //   setSelectedSong(`${apiUrl}/songs/${artist}-${title}/output.m3u8`);
+  // };
+
 
   const handlePlay = () => {
     if (play == false) {
@@ -61,6 +70,9 @@ const Songs: FC = () => {
 
   // cosnt;
 
+
+
+
   return (
     <section>
       <div className="h-calc(100vh-68px)">
@@ -73,19 +85,17 @@ const Songs: FC = () => {
                   <tr>
                     <th>Name</th>
                     <th>Artist</th>
-                    <th>Album</th>
                     <th>Duration</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {SongsData.map((song) => (
+                  {songsData.map((song: any) => (
                     <Song
                       key={song.id}
-                      name={song.name}
+                      name={song.title}
                       artist={song.artist}
-                      album={song.album}
-                      duration={song.duration}
-                    />
+                      duration={song.length}
+                      />
                   ))}
                 </tbody>
               </table>
@@ -93,7 +103,7 @@ const Songs: FC = () => {
           </div>
           <ReactHlsPlayer
             className=""
-            src="http://localhost:8000/songs/gawr gura -riptide/output.m3u8"
+            src={`${apiUrl}/songs/BoyWithUke-LoveSick/output.m3u8`}
             autoPlay={false}
             controls={true}
             width="auto"

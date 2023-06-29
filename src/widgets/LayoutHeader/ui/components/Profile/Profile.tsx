@@ -5,10 +5,11 @@ import axios from "axios";
 
 const Profile: FC = () => {
   const dispatch = useAppDispatch();
+  const apiUrl = import.meta.env.VITE_APP_API;
 
   const Logout = async () => {
     try {
-      await axios.delete("http://localhost:8000/api/auth/logout", {
+      await axios.delete(`${apiUrl}/auth/logout`, {
         withCredentials: true,
       });
       dispatch(clearAuthenticated());

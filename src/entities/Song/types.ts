@@ -3,6 +3,5 @@ export type Song = {
   // alt: string;
   name: string;
   artist: string;
-  album: string;
   duration: number;
 };

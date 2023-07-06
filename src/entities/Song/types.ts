@@ -4,4 +4,5 @@ export type Song = {
   name: string;
   artist: string;
   duration: number;
+  callback: (artist: string, title: string) => void;
 };

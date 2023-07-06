@@ -9,14 +9,20 @@ const Songs: FC = () => {
   const playerRef: any = useRef();
   const [mute, setMute] = useState(false);
   const [play, setPlay] = useState(false);
+  const [loop, setLoop] = useState(false);
+  const [volume, setVolume] = useState(0.03);
   const [songsData, setSongsData] = useState([]);
-  // const volume = 80;
-  // const time = 80;
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setTime] = useState(0);
+  const [selectedSong, setSelectedSong] = useState("");
 
   const apiUrl = import.meta.env.VITE_APP_API;
 
 
   useEffect(() => {
+    setDuration(Math.floor(playerRef.current.duration));
+
+    
     const fetchData = async () => {
       
       const response = await axios.get(`${apiUrl}/songs/all`);
@@ -25,14 +31,6 @@ const Songs: FC = () => {
 
     fetchData();
   }, []);
-
-
-
-  // const [selectedSong, setSelectedSong] = useState<string | null>(null);
-
-  // const handleSongSelect = (artist: string, title: string) => {
-  //   setSelectedSong(`${apiUrl}/songs/${artist}-${title}/output.m3u8`);
-  // };
 
 
   const handlePlay = () => {
@@ -55,23 +53,33 @@ const Songs: FC = () => {
     }
   };
 
-  const handleVolumeDown = () => {
-    playerRef.current.volume -= 0.05;
+
+
+  const volumeSlider = (event: any) => {
+    setVolume(event.target.value);
+    playerRef.current.volume = event.target.value;
   };
 
-  const handleVolumeUp = () => {
-    playerRef.current.volume += 0.05;
+
+  const durationSlider = (event: any) => {
+    setTime(event.target.value);
+    playerRef.current.currentTime = event.target.value;
+  }
+
+
+  const handleSelectSong = async (artist: string, title: string) => {
+    await setSelectedSong(`${apiUrl}/songs/${artist}-${title}/output.m3u8`);
+    playerRef.current.play();
+    setPlay(true);
   };
 
-  // const timeSlider = () => {
-  //   const currentTime = playerRef.current.duration * (time / 100);
-  //   playerRef.currentTime = time;
-  // };
-
-  // cosnt;
-
-
-
+  const handleLoop = () => {
+    if (loop == false) {
+      setLoop(true);
+    } else {
+      setLoop(false);
+    }
+  }
 
   return (
     <section>
@@ -95,98 +103,77 @@ const Songs: FC = () => {
                       name={song.title}
                       artist={song.artist}
                       duration={song.length}
+                      callback={handleSelectSong}
                       />
-                  ))}
+                  ))} 
                 </tbody>
               </table>
             </div>
           </div>
           <ReactHlsPlayer
             className=""
-            src={`${apiUrl}/songs/BoyWithUke-LoveSick/output.m3u8`}
+            src={selectedSong}
             autoPlay={false}
-            controls={true}
+            controls={false}
+            loop={loop}
             width="auto"
             height="100px"
             playerRef={playerRef}
           />
         </div>
         <div className="p-3 gap-x-2 flex absolute bg-neutral items-center justify-center w-full bottom-0">
-          <button
-            className="btn btn-neutral text-2xl font-bold"
-            onClick={handleVolumeDown}
-          >
-            -
-          </button>
-          <label className="swap items-center justify-center">
-            <input type="checkbox" onClick={handlePlay} />
-            <svg
-              className="swap-on w-12 h-12 fill-white"
-              xmlns="http://www.w3.org/2000/svg"
-              version="1.0"
-              width="50.000000pt"
-              height="50.000000pt"
-              viewBox="0 0 50.000000 50.000000"
-              preserveAspectRatio="xMidYMid meet"
+       
+        <button onClick={handlePlay}>
+          {
+            play ?
+           <svg
+            className="swap-on w-12 h-12 fill-white"
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.0"
+            width="50.000000pt"
+            height="50.000000pt"
+            viewBox="0 0 50.000000 50.000000"
+            preserveAspectRatio="xMidYMid meet"
             >
-              <g
-                transform="translate(0.000000,50.000000) scale(0.100000,-0.100000)"
-                fill="#fff"
-                stroke="none"
-              >
-                <path d="M120 250 l0 -170 50 0 50 0 0 170 0 170 -50 0 -50 0 0 -170z" />
-                <path d="M280 250 l0 -170 50 0 50 0 0 170 0 170 -50 0 -50 0 0 -170z" />
-              </g>
-            </svg>
-            <svg
-              className="swap-off w-12 h-12 fill-white"
-              xmlns="http://www.w3.org/2000/svg"
-              version="1.0"
-              width="50.000000pt"
-              height="50.000000pt"
-              viewBox="0 0 50.000000 50.000000"
-              preserveAspectRatio="xMidYMid meet"
+            <g
+            transform="translate(0.000000,50.000000) scale(0.100000,-0.100000)"
+            fill="#fff"
+            stroke="none"
             >
-              <g
-                transform="translate(0.000000,50.000000) scale(0.100000,-0.100000)"
-                fill="#fff"
-                stroke="none"
-              >
-                <path d="M100 250 c0 -104 3 -190 7 -190 10 0 323 184 323 190 0 6 -313 190 -323 190 -4 0 -7 -85 -7 -190z" />
-              </g>
-            </svg>
-          </label>
-          <label className="swap">
-            <input
-              className="btn w-12 h-12 btn-neutral"
-              type="checkbox"
-              onClick={handleMute}
-            />
-            <svg
-              className="swap-off scale-75 fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
+            <path d="M120 250 l0 -170 50 0 50 0 0 170 0 170 -50 0 -50 0 0 -170z" />
+            <path d="M280 250 l0 -170 50 0 50 0 0 170 0 170 -50 0 -50 0 0 -170z" />
+            </g>
+          </svg> 
+            : 
+          <svg
+            className="swap-off w-12 h-12 fill-white"
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.0"
+            width="50.000000pt"
+            height="50.000000pt"
+            viewBox="0 0 50.000000 50.000000"
+            preserveAspectRatio="xMidYMid meet"
             >
-              <path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z" />
-            </svg>
-            <svg
-              className="swap-on scale-75 fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
+            <g
+            transform="translate(0.000000,50.000000) scale(0.100000,-0.100000)"
+            fill="#fff"
+            stroke="none"
             >
-              <path d="M3,9H7L12,4V20L7,15H3V9M16.59,12L14,9.41L15.41,8L18,10.59L20.59,8L22,9.41L19.41,12L22,14.59L20.59,16L18,13.41L15.41,16L14,14.59L16.59,12Z" />
-            </svg>
-          </label>
-          <button
-            className="btn btn-neutral text-2xl font-bold"
-            onClick={handleVolumeUp}
-          >
-            +
-          </button>
+            <path d="M100 250 c0 -104 3 -190 7 -190 10 0 323 184 323 190 0 6 -313 190 -323 190 -4 0 -7 -85 -7 -190z" />
+            </g>
+          </svg>
+        }
+        </button>
+        <input type="range" 
+               style={{ width: "30%" }} 
+               value={currentTime} 
+               min="0" 
+               max={parseInt(duration)} 
+               step={0.01} 
+               onChange={durationSlider}/>
+        <button onClick={handleLoop}>{loop ? "Loop On" : "Loop Off"}</button>
+
+        <input type="range" value={volume} min="0" max="1" step={0.01} onChange={volumeSlider}/>
         </div>
       </div>
     </section>

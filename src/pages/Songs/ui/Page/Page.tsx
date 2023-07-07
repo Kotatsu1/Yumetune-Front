@@ -10,7 +10,7 @@ const Songs: FC = () => {
   const [mute, setMute] = useState(false);
   const [play, setPlay] = useState(false);
   const [loop, setLoop] = useState(false);
-  const [volume, setVolume] = useState(0.03);
+  const [volume, setVolume] = useState(0.1);
   const [songsData, setSongsData] = useState([]);
   const [duration, setDuration] = useState(0);
   const [currentTime, setTime] = useState(0);
@@ -20,7 +20,14 @@ const Songs: FC = () => {
 
 
   useEffect(() => {
-    setDuration(Math.floor(playerRef.current.duration));
+
+
+    setInterval(() => {
+      if (playerRef.current) {
+        setTime(playerRef.current.currentTime);
+        setDuration(playerRef.current.duration);
+      }
+    }, 1000);
 
     
     const fetchData = async () => {
@@ -30,6 +37,9 @@ const Songs: FC = () => {
     };
 
     fetchData();
+
+    playerRef.current.volume = 0.1
+    
   }, []);
 
 
@@ -54,7 +64,6 @@ const Songs: FC = () => {
   };
 
 
-
   const volumeSlider = (event: any) => {
     setVolume(event.target.value);
     playerRef.current.volume = event.target.value;
@@ -71,6 +80,7 @@ const Songs: FC = () => {
     await setSelectedSong(`${apiUrl}/songs/${artist}-${title}/output.m3u8`);
     playerRef.current.play();
     setPlay(true);
+    
   };
 
   const handleLoop = () => {
@@ -122,7 +132,8 @@ const Songs: FC = () => {
           />
         </div>
         <div className="p-3 gap-x-2 flex absolute bg-neutral items-center justify-center w-full bottom-0">
-       
+        <div>{`${Math.floor(currentTime / 60)}:${Math.floor(currentTime % 60).toString().padStart(2, "0")}`} / 
+        {` ${Math.floor(duration / 60)}:${Math.floor(duration % 60).toString().padStart(2, "0")}`}</div>
         <button onClick={handlePlay}>
           {
             play ?
@@ -164,16 +175,28 @@ const Songs: FC = () => {
           </svg>
         }
         </button>
+
         <input type="range" 
+               className="range range-sm range-primary" 
                style={{ width: "30%" }} 
                value={currentTime} 
                min="0" 
-               max={parseInt(duration)} 
+               max={duration} 
                step={0.01} 
-               onChange={durationSlider}/>
-        <button onClick={handleLoop}>{loop ? "Loop On" : "Loop Off"}</button>
+               onChange={durationSlider}
+        />
 
-        <input type="range" value={volume} min="0" max="1" step={0.01} onChange={volumeSlider}/>
+        <button onClick={handleLoop}>{loop ? "Loop On" : "Loop Off"}</button>
+        <button onClick={handleMute}>{mute ? "Mute On" : "Mute Off"}</button>
+
+        <input type="range" 
+               className="range range-xs range-primary" 
+               style={{ width: "100px" }} 
+               value={volume} 
+               min="0" 
+               max="1" 
+               step={0.01} 
+               onChange={volumeSlider}/>
         </div>
       </div>
     </section>

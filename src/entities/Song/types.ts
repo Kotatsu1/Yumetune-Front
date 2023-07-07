@@ -1,8 +1,10 @@
 export type Song = {
   // img: string;
   // alt: string;
+  id: number
+  selectedId: number;
   name: string;
   artist: string;
   duration: number;
-  callback: (artist: string, title: string) => void;
+  callback: (id: number) => void;
 };

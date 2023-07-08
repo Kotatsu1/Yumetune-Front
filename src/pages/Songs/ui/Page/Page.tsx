@@ -21,7 +21,6 @@ const Songs: FC = () => {
 
   useEffect(() => {
 
-
     setInterval(() => {
       if (playerRef.current) {
         setTime(playerRef.current.currentTime);
@@ -39,11 +38,14 @@ const Songs: FC = () => {
     fetchData();
 
     playerRef.current.volume = 0.1
+
+    
     
   }, []);
 
 
   const handlePlay = () => {
+    
     if (play == false) {
       playerRef.current?.play();
       setPlay(true);
@@ -115,9 +117,6 @@ const Songs: FC = () => {
 
   }
 
-  const test = () => {
-    console.log(songsData);
-  }
 
   const handleLoop = () => {
     if (loop == false) {
@@ -170,7 +169,7 @@ const Songs: FC = () => {
             playerRef={playerRef}
           />
         </div>
-        <button onClick={test}>test button</button>
+
         <div className="p-3 gap-x-2 flex absolute bg-neutral items-center justify-center w-full bottom-0">
         <div>{`${Math.floor(currentTime / 60)}:${Math.floor(currentTime % 60).toString().padStart(2, "0")}`} / 
         {` ${Math.floor(duration / 60)}:${Math.floor(duration % 60).toString().padStart(2, "0")}`}</div>

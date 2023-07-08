@@ -1,6 +1,8 @@
 import { Song } from "@/entities/Song/types";
 
+
 const Song = ({ /*img, alt, */ id, selectedId, name, artist, duration, callback }: Song) => {
+
   return (
     <>
       <svg onClick={() => callback(id)} className="cursor-pointer absolute mt-4" version="1.0" xmlns="http://www.w3.org/2000/svg"

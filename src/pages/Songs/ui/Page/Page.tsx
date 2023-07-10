@@ -85,7 +85,7 @@ const Songs: FC = () => {
   const handleSelectSong = async (id: number) => {
     const song: any = songsData.find(obj => obj.id == id);
     localStorage.setItem("selectedSongId", song.id);
-    localStorage.setItem("selectedSong", `${apiUrl}/songs/${song.artist}-${song.title}/output.m3u8`)
+    localStorage.setItem("selectedSong", `${apiUrl}/songs/${song.artist}-${song.title}/playlist.m3u8`)
     setSelectedSong(song.id);
     await sleep(1000);
     playerRef.current.play();
@@ -96,7 +96,7 @@ const Songs: FC = () => {
   const handleNextSong = async () => {
     const song: any = songsData.findIndex(obj => obj.id == parseInt(localStorage.getItem("selectedSongId") as string));
     const nextSong: any = songsData[song + 1];
-    localStorage.setItem("selectedSong", `${apiUrl}/songs/${nextSong.artist}-${nextSong.title}/output.m3u8`)
+    localStorage.setItem("selectedSong", `${apiUrl}/songs/${nextSong.artist}-${nextSong.title}/playlist.m3u8`)
     localStorage.setItem("selectedSongId", nextSong.id);
     setSelectedSong(nextSong.id);
     await sleep(1000);
@@ -108,7 +108,7 @@ const Songs: FC = () => {
   const handlePrevSong = async () => {
     const song: any = songsData.findIndex(obj => obj.id == parseInt(localStorage.getItem("selectedSongId") as string));
     const prevSong: any = songsData[song - 1];
-    localStorage.setItem("selectedSong", `${apiUrl}/songs/${prevSong.artist}-${prevSong.title}/output.m3u8`)
+    localStorage.setItem("selectedSong", `${apiUrl}/songs/${prevSong.artist}-${prevSong.title}/playlist.m3u8`)
     localStorage.setItem("selectedSongId", prevSong.id);
     setSelectedSong(prevSong.id);
     await sleep(1000);

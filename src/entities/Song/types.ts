@@ -3,6 +3,7 @@ export type Song = {
   // alt: string;
   id: number
   selectedId: number;
+  isPlaying: boolean;
   name: string;
   artist: string;
   duration: number;

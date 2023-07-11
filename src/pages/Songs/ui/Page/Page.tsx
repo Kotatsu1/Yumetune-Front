@@ -10,14 +10,14 @@ const Songs: FC = () => {
   const [mute, setMute] = useState(false);
   const [play, setPlay] = useState(false);
   const [loop, setLoop] = useState(true);
-  const [volume, setVolume] = useState(0.1);
+  const [volume, setVolume] = useState(0.01);
   const [songsData, setSongsData] = useState<{ id: number }[]>([]);
   const [duration, setDuration] = useState(0);
   const [currentTime, setTime] = useState(0);
-  const [selectedSong, setSelectedSong] = useState(0);
+  const [selectedSong, setSelectedSong] = useState<number | null>(0);
 
+  
   const apiUrl = import.meta.env.VITE_APP_API;
-
 
   useEffect(() => {
 
@@ -28,7 +28,7 @@ const Songs: FC = () => {
       }
     }, 1000);
 
-    
+
     const fetchData = async () => {
       
       const response = await axios.get(`${apiUrl}/songs/all`);
@@ -37,11 +37,17 @@ const Songs: FC = () => {
 
     fetchData();
 
-    playerRef.current.volume = 0.1
+    playerRef.current.volume = 0.01
 
     
     
   }, []);
+
+  useEffect(() => {
+    const kak = localStorage.getItem("selectedSongId") as number | null;
+    setSelectedSong(+kak!);
+
+  },[]);
 
 
   const handlePlay = () => {
@@ -77,20 +83,33 @@ const Songs: FC = () => {
     playerRef.current.currentTime = event.target.value;
   }
 
+
   function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 
   const handleSelectSong = async (id: number) => {
-    const song: any = songsData.find(obj => obj.id == id);
-    localStorage.setItem("selectedSongId", song.id);
-    localStorage.setItem("selectedSong", `${apiUrl}/songs/${song.artist}-${song.title}/playlist.m3u8`)
-    setSelectedSong(song.id);
-    await sleep(1000);
-    playerRef.current.play();
-    setPlay(true);
-    
+    if (id == selectedSong && play == true) {
+      playerRef.current.pause();
+      setPlay(false);
+    }
+
+    else if (id == selectedSong && play == false) {
+      playerRef.current.play();
+      setPlay(true);
+    }
+
+    else {
+      const song: any = songsData.find(obj => obj.id == id);
+      localStorage.setItem("selectedSongId", song.id);
+      localStorage.setItem("selectedSong", `${apiUrl}/songs/${song.artist}-${song.title}/playlist.m3u8`)
+      setSelectedSong(song.id);
+      await sleep(1000);
+
+      playerRef.current.play();
+      setPlay(true);
+    }
   };
 
   const handleNextSong = async () => {
@@ -126,6 +145,8 @@ const Songs: FC = () => {
     }
   }
 
+
+
   return (
     <section>
       <div className="h-calc(100vh-68px)">
@@ -146,12 +167,12 @@ const Songs: FC = () => {
                     <Song
                       key={song.id}
                       id={song.id}
-                      selectedId={selectedSong}
+                      selectedId={selectedSong!}
+                      isPlaying={play}
                       name={song.title}
                       artist={song.artist}
                       duration={song.length}
                       callback={handleSelectSong}
-                      
                       />
                   ))} 
                 </tbody>
@@ -159,7 +180,7 @@ const Songs: FC = () => {
             </div>
           </div>
           <ReactHlsPlayer
-            className=""
+            className="hidden"
             src={localStorage.getItem("selectedSong") as string}
             autoPlay={false}
             controls={false}

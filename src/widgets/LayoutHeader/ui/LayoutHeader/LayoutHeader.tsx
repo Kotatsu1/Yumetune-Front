@@ -1,19 +1,16 @@
 import { useAppSelector } from "@/app/hooks";
-import { Logo, Nav, Profile } from "../components";
+import { Profile } from "../components";
+import { LayoutPlayer } from "@/widgets";
 
 const LayoutHeader = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   return (
     <>
-      <header className="navbar flex justify-between bg-base-100">
-        <Logo />
-        {isAuthenticated ? (
-          <>
-            <Nav />
-            <Profile />
-          </>
-        ) : null}
+      <header className="navbar flex bg-neutral h-16 w-full justify-between">
+        
+        <LayoutPlayer />
+        <Profile />
       </header>
     </>
   );

@@ -1,24 +1,21 @@
-// import { useAppSelector } from "@/app/hooks";
 import { LayoutHeader } from "@/widgets";
-// import {  LayoutPlayer } from "@/widgets";
 import { Outlet } from "react-router-dom";
+import { Border } from "@/pages";
 
 const Layout = () => {
-  // const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   return (
     <>
-      <div className="flex font-mono overflow-y-hidden flex-col">
-        <LayoutHeader />
-        <main>
+      <div className="flex font-mono overflow-y-hidden">
+        <Border />
+
+        <div className="w-full">
+          <LayoutHeader />
           <Outlet />
-        </main>
-        {/* {isAuthenticated ? (
-          <>
-            <LayoutPlayer />
-          </>
-        ) : null} */}
-      </div>
+        </div>
+      </div>  
+
+
     </>
   );
 };

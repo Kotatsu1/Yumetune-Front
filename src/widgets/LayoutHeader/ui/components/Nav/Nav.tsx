@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Nav = () => {
   return (
-    <ul className="menu rounded-box md:menu-horizontal">
+    <ul className="menu rounded-box md:menu-vertical">
       <li>
         <Link to="/">Browse</Link>
       </li>

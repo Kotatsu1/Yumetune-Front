@@ -8,7 +8,6 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          {/* <Route path="/browse" element={<Browse />} /> */}
           <Route path="/songs" element={<Songs />} />
           <Route path="/search" element={<Search />} />
           <Route path="*" element={<NoMatch />} />

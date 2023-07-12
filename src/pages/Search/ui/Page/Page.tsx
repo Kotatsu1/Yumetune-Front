@@ -70,6 +70,9 @@ const Search: FC = () => {
 
     return (
         <>
+      <div className="p-4">
+        <h1 className="text-4xl text-white font-bold">Search</h1>
+      </div>
         <div className="ml-40 mt-20">
             <input type="text" 
                 value={searchInputValue} 

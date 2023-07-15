@@ -1,9 +1,8 @@
 import { FC, SetStateAction, useState } from "react";
-import axios from "axios";
+import useAxios from "@/interceptors";
 
 
 const Search: FC = () => {
-    const apiUrl = import.meta.env.VITE_APP_API;
     const [searchData, setSearchData] = useState<any>([]);
     const [searchInputValue, setSearchInputValue] = useState('');
     const [loading, setLoading] = useState(false);
@@ -11,6 +10,8 @@ const Search: FC = () => {
     const [sourceData, setSourceData] = useState('');
     const [artistInputValue, setArtistInputValue] = useState('');
     const [titleInputValue, setTitleInputValue] = useState('');
+
+    const axiosRequest = useAxios();
 
     const handleInputChange = (event: { target: { value: SetStateAction<string>; }; }) => {
         setSearchInputValue(event.target.value);
@@ -28,7 +29,7 @@ const Search: FC = () => {
     const fetchSearchData = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${apiUrl}/yt_search/search?request=${searchInputValue}`);
+            const response = await axiosRequest.get(`/yt_search/search?request=${searchInputValue}`);
             setSearchData(response.data);
           } catch (error) {
 
@@ -41,7 +42,7 @@ const Search: FC = () => {
     const serverSongUpload = async () => {
         setUploading(true);
         try {
-            const response = await axios.post(`${apiUrl}/yt_search/create_hls`, {
+            const response = await axiosRequest.post(`/yt_search/create_hls`, {
                 source: sourceData,
                 artist: artistInputValue,
                 title: titleInputValue,

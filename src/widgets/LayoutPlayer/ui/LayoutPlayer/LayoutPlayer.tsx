@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { setPlayerState, setSelectedSong } from "@/features";
 import { usePlayer } from "../../usePlayer";
 import { setData } from "@/features";
-import axios from "axios";
+import useAxios from "@/interceptors";
 
 const LayoutPlayer: FC = () => {
   const apiUrl = import.meta.env.VITE_APP_API;
@@ -17,6 +17,7 @@ const LayoutPlayer: FC = () => {
   const [currentSongName, setCurrentSongName] = useState("");
 
   const dispatch = useAppDispatch();
+  const axiosRequest = useAxios();
   const { data } = useAppSelector((state) => state.songs);
   const { isPlaying } = useAppSelector((state) => state.player);
 
@@ -50,7 +51,7 @@ const LayoutPlayer: FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`${apiUrl}/songs/all`);
+      const response = await axiosRequest.get(`/songs/all`);
       dispatch(setData(response.data));
     };
 
@@ -92,9 +93,6 @@ const LayoutPlayer: FC = () => {
     playerRef.current.currentTime = event.target.value;
   };
 
-  // function sleep(ms: number) {
-  //   return new Promise((resolve) => setTimeout(resolve, ms));
-  // }
 
   const handleNextSong = async () => {
     const song: any = data.findIndex(
@@ -108,8 +106,6 @@ const LayoutPlayer: FC = () => {
     );
     localStorage.setItem("selectedSongId", nextSong.id);
     dispatch(setSelectedSong(nextSong.id));
-    // await sleep(1000);
-    // playerRef.current.play();
     dispatch(setPlayerState(true));
     localStorage.setItem("currentSongName", nextSong.artist + " - " + nextSong.title);
   };
@@ -126,8 +122,6 @@ const LayoutPlayer: FC = () => {
     );
     localStorage.setItem("selectedSongId", prevSong.id);
     dispatch(setSelectedSong(prevSong.id));
-    // await sleep(1000);
-    // playerRef.current.play();
     dispatch(setPlayerState(true));
     localStorage.setItem("currentSongName", prevSong.artist + " - " + prevSong.title);
   };

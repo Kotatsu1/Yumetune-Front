@@ -1,58 +1,39 @@
-import axios from "axios"
-import { useState } from "react";
+import useAxios from "@/interceptors";
+import { useEffect, useState } from "react";
+
+
 
 const Library = () => {
-
-  const apiUrl = import.meta.env.VITE_APP_API;
   const [libraryData, setLibraryData] = useState([]);
-
-
-
-  const tempLogin = async () => {
-    await axios.post(`${apiUrl}/auth/login`,
-    {
-      login: 'kotatsu',
-      password: 'zxasqw123',
-    },
-    {
-      withCredentials: true,
-    });
-  }
-
-  const tempRefresh = async () => {
-    await axios.post(`${apiUrl}/auth/refresh`,
-    {},
-    {
-      withCredentials: true,
-    },);
-  }
+  const axiosRequest = useAxios();
 
   const fetchLibrary = async () => {
-    const response = await axios.get(`${apiUrl}/library/`,
-    {
+    const response = await axiosRequest.get(`/library/`, {
       withCredentials: true,
-    },);
+    });
     setLibraryData(response.data);
   };
 
-
+  useEffect(() => {
+    fetchLibrary();
+  }, []);
 
   return (
     <>
-
-      <button className="block" onClick={tempLogin}>Login</button>
-      <button className="block" onClick={tempRefresh}>Refresh</button>
-      <button className="block" onClick={fetchLibrary}>fetchLibrary</button>
-
       <div className="mt-10">
         {libraryData.map((song: any) => (
-          <p>{song.title}</p>
+          <>
+          <ul className="flex gap-5">
+            <li>{song.title}</li>
+            <li>{song.artist}</li>
+            <li>{song.length}s</li>
+            <li>{song.play_count}</li>
+          </ul>
+          </>
         ))}
       </div>
-
     </>
-  )
-}
+  );
+};
 
-
-export default Library
+export default Library;

@@ -1,15 +1,15 @@
 import { FC } from "react";
 import { useAppDispatch } from "@/app/hooks";
 import { clearAuthenticated } from "@/features/Auth/AuthSlice";
-import axios from "axios";
+import useAxios from "@/interceptors";
 
 const Profile: FC = () => {
   const dispatch = useAppDispatch();
-  const apiUrl = import.meta.env.VITE_APP_API;
+  const axiosRequest = useAxios();
 
   const Logout = async () => {
     try {
-      await axios.delete(`${apiUrl}/auth/logout`, 
+      await axiosRequest.delete(`/auth/logout`, 
         {
           withCredentials: true,
         }
@@ -34,7 +34,6 @@ const Profile: FC = () => {
         <li>
           <a className="justify-between">
             Profile
-            <span className="badge">New</span>
           </a>
         </li>
         <li>

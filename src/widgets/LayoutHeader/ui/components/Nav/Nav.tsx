@@ -4,7 +4,7 @@ const Nav = () => {
   return (
     <ul className="menu rounded-box md:menu-vertical text-lg">
       <li>
-        <Link to="/">Browse</Link>
+        <Link to="/browse">Browse</Link>
       </li>
       <li>
         <Link to={"/songs"}>Songs</Link>

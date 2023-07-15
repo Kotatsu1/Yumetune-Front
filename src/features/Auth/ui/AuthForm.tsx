@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAppDispatch } from "@/app/hooks";
 import { setAuthenticated } from "../AuthSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
+import useAxios from "@/interceptors";
 
 type Form = {
   login: string;
@@ -13,15 +13,16 @@ type Form = {
 };
 
 const AuthForm: FC = () => {
-  const apiUrl = import.meta.env.VITE_APP_API;
   const [login, setLogin] = useState(false);
   const dispatch = useAppDispatch();
   const { register, handleSubmit } = useForm<Form>();
 
+  const axiosRequest = useAxios();
+
   const handleLogin: SubmitHandler<Form> = async (form) => {
     try {
-      await axios.post(
-        `${apiUrl}/auth/login`,
+      await axiosRequest.post(
+        `/auth/login`,
         {
           login: form.login,
           password: form.password,
@@ -43,7 +44,7 @@ const AuthForm: FC = () => {
 
   const handleRegister: SubmitHandler<Form> = async (form) => {
     try {
-      await axios.post(`${apiUrl}/auth/register`, {
+      await axiosRequest.post(`/auth/register`, {
         username: form.username,
         email: form.email,
         password: form.password,

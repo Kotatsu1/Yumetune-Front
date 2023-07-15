@@ -1,9 +1,9 @@
-import { useAppSelector } from "@/app/hooks";
+// import { useAppSelector } from "@/app/hooks";
 import { Profile } from "../components";
 import { LayoutPlayer } from "@/widgets";
 
 const LayoutHeader = () => {
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  // const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   return (
     <>

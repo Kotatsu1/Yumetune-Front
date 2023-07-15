@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap');
+
+.preloader {
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  animation: ShowBackground 3s ease;
+  visibility: hidden;
+
+  @keyframes ShowBackground {
+    from {
+      opacity: 1;
+      visibility: visible;
+      background: #b271ee;
+    }
+
+    40% {
+      opacity: 1;
+    }
+
+    60% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+      visibility: visible;
+      background: #b271ee;
+    }
+  }
+
+  .title1 {
+    position: absolute;
+    font-size: 8rem;
+    font-family: 'Caveat', cursive;
+    line-height: 1;
+    transform: translate3d(0, -50%, 0);
+    animation: ShowText1 2s ease;
+
+    @keyframes ShowText1 {
+      from {
+        transform: translate3d(0, -600%, 0);
+      }
+
+      20% {
+        transform: translate3d(0, -600%, 0);}
+
+      85% {
+
+        transform: translate3d(0, -50%, 0);
+      }
+
+      to {
+        transform: translate3d(0, -50%, 0);
+      }
+    }
+  }
+
+
+  .title2 {
+    position: absolute;
+    font-size: 8rem;
+    font-family: 'Caveat', cursive;
+    line-height: 1;
+    animation: ShowText2 2s ease;
+    transform: translate3d(0, 50%, 0);
+
+    @keyframes ShowText2 {
+      from {
+
+        transform: translate3d(0, 600%, 0);
+      }
+
+      85% {
+
+        transform: translate3d(0, 50%, 0);
+      }
+
+      to {
+        transform: translate3d(0, 50%, 0);
+      }
+    }
+  }
+}

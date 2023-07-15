@@ -9,9 +9,11 @@ const Profile: FC = () => {
 
   const Logout = async () => {
     try {
-      await axios.delete(`${apiUrl}/auth/logout`, {
-        withCredentials: true,
-      });
+      await axios.delete(`${apiUrl}/auth/logout`, 
+        {
+          withCredentials: true,
+        }
+      );
       dispatch(clearAuthenticated());
     } catch (error) {
       console.log("error: " + error);

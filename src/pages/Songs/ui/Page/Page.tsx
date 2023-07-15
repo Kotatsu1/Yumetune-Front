@@ -1,8 +1,6 @@
 import { Song } from "@/entities";
-import { FC, useEffect } from "react";
-import axios from "axios";
+import { FC } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { setData } from "@/features";
 import { setPlayerState, setSelectedSong } from "@/features";
 
 const Songs: FC = () => {
@@ -13,14 +11,6 @@ const Songs: FC = () => {
   const { isPlaying } = useAppSelector((state) => state.player);
   const selectedSong = useAppSelector((state) => state.player.selectedSong);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(`${apiUrl}/songs/all`);
-      dispatch(setData(response.data));
-    };
-
-    fetchData();
-  }, []);
 
   const handleSelectSong = async (id: number) => {
     if (id == selectedSong && isPlaying == true) {

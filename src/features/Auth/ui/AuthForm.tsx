@@ -13,9 +13,9 @@ type Form = {
 };
 
 const AuthForm: FC = () => {
+  const apiUrl = import.meta.env.VITE_APP_API;
   const [login, setLogin] = useState(false);
   const dispatch = useAppDispatch();
-  const apiUrl = import.meta.env.VITE_APP_API;
   const { register, handleSubmit } = useForm<Form>();
 
   const handleLogin: SubmitHandler<Form> = async (form) => {

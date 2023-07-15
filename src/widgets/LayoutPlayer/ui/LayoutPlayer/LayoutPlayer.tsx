@@ -3,6 +3,8 @@ import ReactHlsPlayer from "react-hls-player";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { setPlayerState, setSelectedSong } from "@/features";
 import { usePlayer } from "../../usePlayer";
+import { setData } from "@/features";
+import axios from "axios";
 
 const LayoutPlayer: FC = () => {
   const apiUrl = import.meta.env.VITE_APP_API;
@@ -45,6 +47,16 @@ const LayoutPlayer: FC = () => {
       playerRef.current?.play();
     }
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(`${apiUrl}/songs/all`);
+      dispatch(setData(response.data));
+    };
+
+    fetchData();
+  }, []);
+
 
   useEffect(() => {
     setCurrentSongName(localStorage.getItem("currentSongName") as string);

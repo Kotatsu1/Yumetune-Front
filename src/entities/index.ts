@@ -1,2 +1,3 @@
 import { Song } from "./Song";
-export { Song };
+import { LibrarySong } from "./LibrarySong";
+export { Song, LibrarySong };

@@ -1,7 +1,6 @@
 import useAxios from "@/interceptors";
 import { useEffect, useState } from "react";
-
-
+import { LibrarySong } from "@/entities";
 
 const Library = () => {
   const [libraryData, setLibraryData] = useState([]);
@@ -18,19 +17,40 @@ const Library = () => {
     fetchLibrary();
   }, []);
 
+
+  const dummy = () => {
+    return "안녕하세요";
+  }
+
   return (
     <>
       <div className="mt-10">
-        {libraryData.map((song: any) => (
-          <>
-          <ul className="flex gap-5">
-            <li>{song.title}</li>
-            <li>{song.artist}</li>
-            <li>{song.length}s</li>
-            <li>{song.play_count}</li>
-          </ul>
-          </>
-        ))}
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Artist</th>
+                  <th>Duration</th>
+                  <th>Play Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                {libraryData.map((song: any) => (
+                  <LibrarySong
+                    key={song.id}
+                    library_id={song.library_id}
+                    added_at={song.added_at}
+                    play_count={song.play_count}
+                    selectedId={song.id}
+                    isPlaying={false}
+                    name={song.title}
+                    artist={song.artist}
+                    duration={song.length}
+                    callback={dummy}
+                  />
+                ))}
+              </tbody>
+            </table>
       </div>
     </>
   );

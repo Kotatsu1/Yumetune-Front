@@ -51,7 +51,10 @@ const LayoutPlayer: FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axiosRequest.get(`/songs/all`);
+      const response = await axiosRequest.get(`/songs/all`,
+      {
+        withCredentials: true,
+      },);
       dispatch(setData(response.data));
     };
 

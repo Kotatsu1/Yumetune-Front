@@ -1,4 +1,7 @@
 import { Song } from "@/entities/Song/types";
+import useAxios from "@/interceptors";
+import { useAppSelector } from "@/app/hooks";
+
 
 const Song = ({
   id,
@@ -8,7 +11,25 @@ const Song = ({
   artist,
   duration,
   callback,
+  callback2,
+  callback3,
 }: Song) => {
+  const axiosRequest = useAxios();
+  const { data } = useAppSelector((state) => state.songs);
+
+  const addtoPlaylist = async (playlist_id: number, song_id: number) => {
+    await axiosRequest.post(`/playlists/add-song`,
+    {
+      playlist_id: playlist_id,
+      song_id: song_id,
+
+    },
+    {
+      withCredentials: true,
+    });
+    
+  }
+
   return (
     <>
       {id === selectedId && isPlaying === true ? (
@@ -53,14 +74,41 @@ const Song = ({
       )}
 
       <tr className={id == selectedId ? "bg-primary" : ""}>
-        <td>
-          {"ㅤㅤ"}
-          {name}
-        </td>
+        <td className="pl-8">{name}</td>
         <td>{artist}</td>
         <td>{`${Math.floor(duration / 60)}:${(duration % 60)
           .toString()
           .padStart(2, "0")}`}</td>
+        <div className="dropdown dropdown-end">
+          <label className="dropdown-toggle" tabIndex={0}>...</label>
+          <ul
+            tabIndex={0}
+            className="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52"
+          >
+            <li>
+              {data.find((obj: any) => obj.id == id) ? (
+                <button className="mt-2" onClick={() => callback3(id)}>
+                  remove from library
+                </button>
+              ) : (
+                <button className="mt-2" onClick={() => callback2(id)}>
+                  add to library
+                </button>
+              )}
+            </li>
+            <li>
+              {/* <button onClick={() => addtoPlaylist(4, id)}>
+                add to playlist
+              </button> */}
+
+
+              <li>hello</li>
+
+
+
+            </li>
+          </ul>
+        </div>
       </tr>
     </>
   );

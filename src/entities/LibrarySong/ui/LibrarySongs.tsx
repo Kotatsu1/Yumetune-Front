@@ -14,7 +14,7 @@ const LibrarySong = ({
   console.log(added_at)
   return (
     <>
-      {library_id === selectedId && isPlaying === true ? (
+      {library_id == selectedId && isPlaying == true ? (
         <svg
           onClick={() => callback(library_id)}
           className="fill-white absolute mt-2"
@@ -56,8 +56,7 @@ const LibrarySong = ({
       )}
 
       <tr className={library_id == selectedId ? "bg-primary" : ""}>
-        <td>
-          {"ㅤㅤ"}
+        <td className="pl-8">
           {name}
         </td>
         <td>{artist}</td>

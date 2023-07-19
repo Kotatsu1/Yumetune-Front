@@ -8,4 +8,6 @@ export type Song = {
   artist: string;
   duration: number;
   callback: (id: number) => void;
+  callback2: (id: number) => void;
+  callback3: (id: number) => void;
 };

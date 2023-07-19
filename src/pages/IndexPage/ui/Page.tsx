@@ -6,6 +6,21 @@ const IndexPage = () => {
         <br />
         <div>Consider installing our non-existent mobile app</div>
       </div>
+
+      <div className="dropdown">
+  <button className="btn btn-primary dropdown-toggle">Primary Dropdown</button>
+  <ul className="shadow menu dropdown-content bg-base-100 rounded-box w-52">
+    <li>
+      <a>Dropdown Item 1</a>
+    </li>
+    <li>
+      <a>Dropdown Item 2</a>
+    </li>
+  </ul>
+</div>
+
+
+
     </>
   );
 };

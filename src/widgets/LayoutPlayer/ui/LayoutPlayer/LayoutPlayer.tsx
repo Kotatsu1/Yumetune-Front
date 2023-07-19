@@ -6,6 +6,7 @@ import { usePlayer } from "../../usePlayer";
 import { setData } from "@/features";
 import useAxios from "@/interceptors";
 
+
 const LayoutPlayer: FC = () => {
   const apiUrl = import.meta.env.VITE_APP_API;
   const { playerRef }: any = usePlayer();
@@ -17,9 +18,9 @@ const LayoutPlayer: FC = () => {
   const [currentSongName, setCurrentSongName] = useState("");
 
   const dispatch = useAppDispatch();
-  const axiosRequest = useAxios();
   const { data } = useAppSelector((state) => state.songs);
   const { isPlaying } = useAppSelector((state) => state.player);
+  const axiosRequest = useAxios();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -49,18 +50,18 @@ const LayoutPlayer: FC = () => {
     }
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axiosRequest.get(`/songs/all`,
-      {
-        withCredentials: true,
-      },);
-      dispatch(setData(response.data));
-    };
+  const fetchData = async () => {
+    const response = await axiosRequest.get(`/library/`,
+    {
+      withCredentials: true,
+    },);
+    dispatch(setData(response.data));
+  };
 
+
+  useEffect(() => {
     fetchData();
   }, []);
-
 
   useEffect(() => {
     setCurrentSongName(localStorage.getItem("currentSongName") as string);
@@ -97,37 +98,38 @@ const LayoutPlayer: FC = () => {
   };
 
 
-  const handleNextSong = async () => {
-    const song: any = data.findIndex(
-      (obj) =>
-        obj.id == parseInt(localStorage.getItem("selectedSongId") as string),
-    );
-    const nextSong: any = data[song + 1];
-    localStorage.setItem(
-      "selectedSong",
-      `${apiUrl}/songs/${nextSong.artist}-${nextSong.title}/playlist.m3u8`,
-    );
-    localStorage.setItem("selectedSongId", nextSong.id);
-    dispatch(setSelectedSong(nextSong.id));
-    dispatch(setPlayerState(true));
-    localStorage.setItem("currentSongName", nextSong.artist + " - " + nextSong.title);
-  };
+  // const handleNextSong = async () => {
+  //   const song: any = data.findIndex(
+  //     (obj) =>
+  //       obj.id == parseInt(localStorage.getItem("selectedSongId") as string),
+  //   );
+  //   const nextSong: any = data[song + 1];
+  //   localStorage.setItem(
+  //     "selectedSong",
+  //     `${apiUrl}/songs/${nextSong.artist}-${nextSong.title}/playlist.m3u8`,
+  //   );
+  //   localStorage.setItem("selectedSongId", nextSong.id);
+  //   dispatch(setSelectedSong(nextSong.id));
+  //   dispatch(setPlayerState(true));
+  //   localStorage.setItem("currentSongName", nextSong.artist + " - " + nextSong.title);
+  // };
 
-  const handlePrevSong = async () => {
-    const song: any = data.findIndex(
-      (obj) =>
-        obj.id == parseInt(localStorage.getItem("selectedSongId") as string),
-    );
-    const prevSong: any = data[song - 1];
-    localStorage.setItem(
-      "selectedSong",
-      `${apiUrl}/songs/${prevSong.artist}-${prevSong.title}/playlist.m3u8`,
-    );
-    localStorage.setItem("selectedSongId", prevSong.id);
-    dispatch(setSelectedSong(prevSong.id));
-    dispatch(setPlayerState(true));
-    localStorage.setItem("currentSongName", prevSong.artist + " - " + prevSong.title);
-  };
+  // const handlePrevSong = async () => {
+  //   const song: any = data.findIndex(
+  //     (obj) =>
+  //       obj.id == parseInt(localStorage.getItem("selectedSongId") as string),
+  //   );
+  //   console.log(song)
+  //   const prevSong: any = data[song - 1];
+  //   localStorage.setItem(
+  //     "selectedSong",
+  //     `${apiUrl}/songs/${prevSong.artist}-${prevSong.title}/playlist.m3u8`,
+  //   );
+  //   localStorage.setItem("selectedSongId", prevSong.id);
+  //   dispatch(setSelectedSong(prevSong.id));
+  //   dispatch(setPlayerState(true));
+  //   localStorage.setItem("currentSongName", prevSong.artist + " - " + prevSong.title);
+  // };
 
   const handleLoop = () => {
     if (loop == false) {
@@ -162,9 +164,9 @@ const LayoutPlayer: FC = () => {
             .padStart(2, "0")}`}
         </div>
 
-        <svg
+        {/* <svg
           onClick={handlePrevSong}
-          className="w-10 h-10 cursor-pointer"
+          className="w-6 h-6 cursor-pointer"
           version="1.0"
           xmlns="http://www.w3.org/2000/svg"
           width="512.000000pt"
@@ -187,12 +189,12 @@ const LayoutPlayer: FC = () => {
           279 -57 27 -132 38 -187 27z"
             />
           </g>
-        </svg>
+        </svg> */}
 
         <button onClick={handlePlay}>
           {isPlaying ? (
             <svg
-              className="w-12 h-12 fill-white"
+              className="w-8 h-8 fill-white"
               xmlns="http://www.w3.org/2000/svg"
               version="1.0"
               width="50.000000pt"
@@ -211,7 +213,7 @@ const LayoutPlayer: FC = () => {
             </svg>
           ) : (
             <svg
-              className="w-12 h-12 fill-white"
+              className="w-8 h-8 fill-white"
               xmlns="http://www.w3.org/2000/svg"
               version="1.0"
               width="50.000000pt"
@@ -230,9 +232,9 @@ const LayoutPlayer: FC = () => {
           )}
         </button>
 
-        <svg
+        {/* <svg
           onClick={handleNextSong}
-          className="w-10 h-10 cursor-pointer"
+          className="w-6 h-6 cursor-pointer"
           version="1.0"
           xmlns="http://www.w3.org/2000/svg"
           width="512.000000pt"
@@ -256,7 +258,7 @@ const LayoutPlayer: FC = () => {
           20z"
             />
           </g>
-        </svg>
+        </svg> */}
         <div style={{ width: "30%" }}>
           <input
             type="range"

@@ -19,12 +19,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
-      "widgets/*": ["src/widgets/*"],
-      "features/*": ["src/features/*"],
-      "entities/*": ["src/entities/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"],

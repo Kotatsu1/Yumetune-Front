@@ -1,39 +1,27 @@
-# Yumetune-Front
+# React + TypeScript + Vite
 
-Listen to your dreams with Yumetune - the audio streaming platform that takes you to new worlds of sound.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Description
+Currently, two official plugins are available:
 
-The platform is designed to take users on a journey through new worlds of sound, offering a curated selection of music from various genres. Users can search for and discover new music, create playlists, and follow other users to see what they are listening to. Yumetune-Front also features a responsive design, making it easy to use on both desktop and mobile devices.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-The project is actively maintained and developed by a team of passionate developers who are dedicated to delivering a high-quality audio streaming experience. If you have any questions or suggestions, feel free to reach out to us.
+## Expanding the ESLint configuration
 
-Yumetune-Front is built using a modern, component-based architecture, making it easy to scale and maintain. The platform is designed to be fast and efficient, with minimal load times and smooth transitions between pages.
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-## Installation
+- Configure the top-level `parserOptions` property like this:
 
-1. Make sure you have `Node.js` installed on your computer.
-2. Clone the repository: `git clone https://github.com/your_username/Yumetune-Front.git`.
-3. Navigate to the project folder: `cd Yumetune-Front`.
-4. Install the dependencies: `npm install` or `yarn install`.
+```js
+   parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+   },
+```
 
-## Usage
-
-1. Run the project: `npm run dev` or `yarn dev`.
-2. Open your browser and navigate to `http://localhost:5174/`.
-
-## Technologies
-
-Yumetune-Front is built with the following technologies:
-
-- TypeScript
-- React
-- Redux + Redux Tool-kit
-- React Query
-- Tailwind + DaisyUI
-- Vite
-
-## Authors
-
-- Kotatsu Nikita [Telegram](https://t.me/Kotatsu)
-- Popov Aleksey [Telegram](https://t.me/AlekseyPopovDev)
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
